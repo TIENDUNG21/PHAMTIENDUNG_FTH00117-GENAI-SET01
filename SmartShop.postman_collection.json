@@ -1,0 +1,81 @@
+{
+  "info": {
+    "name": "Smart Shop - Gemini API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5280" }
+  ],
+  "item": [
+    {
+      "name": "List products",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/products"
+      }
+    },
+    {
+      "name": "Generate product description",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/products/1/generatedescription",
+        "header": [{ "key": "Content-Type", "value": "application/json" }]
+      }
+    },
+    {
+      "name": "Analyze review",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/reviews/analyze",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"productId\": 1,\n  \"customerName\": \"Alice\",\n  \"content\": \"Battery life is great but the phone gets hot when gaming for a long time.\",\n  \"rating\": 4\n}"
+        }
+      }
+    },
+    {
+      "name": "Shopping assistant chat (turn 1)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/assistant/chat",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": \"demo-session-1\",\n  \"message\": \"Which phone has the biggest battery?\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Shopping assistant chat (turn 2 - follow-up)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/assistant/chat",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": \"demo-session-1\",\n  \"message\": \"How much does it cost?\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Shopping assistant chat (unrelated question, should refuse)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/assistant/chat",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": \"demo-session-2\",\n  \"message\": \"What is the capital of France?\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Review report",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/reports/reviews"
+      }
+    }
+  ]
+}
